@@ -58,7 +58,7 @@ void quaternionMsgToKindr(const geometry_msgs::Quaternion& msg,
   *kindr = kindr::minimal::RotationQuaternion(quat);
 }
 
-void quaternionKindrToMsg(const  Eigen::Quaterniond& kindr,
+void quaternionKindrToMsg(const Eigen::Quaterniond& kindr,
                           geometry_msgs::Quaternion* msg) {
   CHECK_NOTNULL(msg);
   quaternionEigenToMsg(kindr, *msg);
@@ -80,12 +80,14 @@ void pointMsgToKindr(const geometry_msgs::Point& msg, Eigen::Vector3d* kindr) {
   pointMsgToEigen(msg, *kindr);
 }
 
-void vectorKindrToMsg(const Eigen::Vector3d& kindr, geometry_msgs::Vector3* msg) {
+void vectorKindrToMsg(const Eigen::Vector3d& kindr,
+                      geometry_msgs::Vector3* msg) {
   CHECK_NOTNULL(msg);
   vectorEigenToMsg(kindr, *msg);
 }
 
-void vectorMsgToKindr(const geometry_msgs::Vector3& msg, Eigen::Vector3d* kindr) {
+void vectorMsgToKindr(const geometry_msgs::Vector3& msg,
+                      Eigen::Vector3d* kindr) {
   CHECK_NOTNULL(kindr);
   vectorMsgToEigen(msg, *kindr);
 }

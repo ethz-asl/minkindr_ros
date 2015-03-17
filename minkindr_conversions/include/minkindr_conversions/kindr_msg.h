@@ -31,7 +31,7 @@ void quaternionMsgToKindr(const geometry_msgs::Quaternion& msg,
                           kindr::minimal::RotationQuaternion* kindr);
 
 // Also the Eigen implementation version of this.
-void quaternionKindrToMsg(const  Eigen::Quaterniond& kindr,
+void quaternionKindrToMsg(const Eigen::Quaterniond& kindr,
                           geometry_msgs::Quaternion* msg);
 void quaternionMsgToKindr(const geometry_msgs::Quaternion& msg,
                           Eigen::Quaterniond* kindr);
@@ -40,9 +40,11 @@ void quaternionMsgToKindr(const geometry_msgs::Quaternion& msg,
 void pointKindrToMsg(const Eigen::Vector3d& kindr, geometry_msgs::Point* msg);
 void pointMsgToKindr(const geometry_msgs::Point& msg, Eigen::Vector3d* kindr);
 
-void vectorKindrToMsg(const Eigen::Vector3d& kindr, geometry_msgs::Vector3* msg);
+void vectorKindrToMsg(const Eigen::Vector3d& kindr,
+                      geometry_msgs::Vector3* msg);
 
-void vectorMsgToKindr(const geometry_msgs::Vector3& msg, Eigen::Vector3d* kindr);
+void vectorMsgToKindr(const geometry_msgs::Vector3& msg,
+                      Eigen::Vector3d* kindr);
 
 }  // namespace tf
 
