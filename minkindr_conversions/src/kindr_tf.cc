@@ -20,7 +20,7 @@ void transformKindrToTF(const kindr::minimal::QuatTransformation& kindr,
   CHECK_NOTNULL(tf_type);
   tf::Vector3 origin;
   tf::Quaternion rotation;
-  pointKindrToTF(kindr.getPosition(), &origin);
+  vectorKindrToTF(kindr.getPosition(), &origin);
   quaternionKindrToTF(kindr.getRotation(), &rotation);
   tf_type->setOrigin(origin);
   tf_type->setRotation(rotation);
@@ -33,7 +33,7 @@ void transformTFToKindr(const tf::Transform& tf_type,
   Eigen::Quaterniond rotation;
 
   quaternionTFToKindr(tf_type.getRotation(), &rotation);
-  pointTFToKindr(tf_type.getOrigin(), &position);
+  vectorTFToKindr(tf_type.getOrigin(), &position);
 
   *kindr = kindr::minimal::QuatTransformation(rotation, position);
 }
@@ -65,12 +65,12 @@ void quaternionTFToKindr(const tf::Quaternion& tf_type,
   quaternionTFToEigen(tf_type, *kindr);
 }
 
-void pointKindrToTF(const Eigen::Vector3d& kindr, tf::Vector3* tf_type) {
+void vectorKindrToTF(const Eigen::Vector3d& kindr, tf::Vector3* tf_type) {
   CHECK_NOTNULL(tf_type);
   vectorEigenToTF(kindr, *tf_type);
 }
 
-void pointTFToKindr(const tf::Vector3& tf_type, Eigen::Vector3d* kindr) {
+void vectorTFToKindr(const tf::Vector3& tf_type, Eigen::Vector3d* kindr) {
   CHECK_NOTNULL(kindr);
   vectorTFToEigen(tf_type, *kindr);
 }

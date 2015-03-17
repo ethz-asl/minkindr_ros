@@ -32,8 +32,8 @@ void quaternionTFToKindr(const tf::Quaternion& tf_type,
                          Eigen::Quaterniond* kindr);
 
 // A wrapper for the relevant functions in eigen_conversions.
-void pointKindrToTF(const Eigen::Vector3d& kindr, tf::Vector3* tf_type);
-void pointTFToKindr(const tf::Vector3& tf_type, Eigen::Vector3d* kindr);
+void vectorKindrToTF(const Eigen::Vector3d& kindr, tf::Vector3* tf_type);
+void vectorTFToKindr(const tf::Vector3& tf_type, Eigen::Vector3d* kindr);
 
 }  // namespace tf
 
