@@ -7,7 +7,7 @@
 
 namespace tf {
 
-TEST(KindrTfTest, poseKindrToMsgToKindr) {
+TEST(KindrMsgTest, poseKindrToMsgToKindr) {
   Eigen::Quaterniond rotation(Eigen::Vector4d::Random());
   rotation.normalize();
   Eigen::Vector3d position(Eigen::Vector3d::Random());
@@ -23,7 +23,7 @@ TEST(KindrTfTest, poseKindrToMsgToKindr) {
   EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, 1e-6);
 }
 
-TEST(KindrTfTest, transformKindrToMsgToKindr) {
+TEST(KindrMsgTest, transformKindrToMsgToKindr) {
   Eigen::Quaterniond rotation(Eigen::Vector4d::Random());
   rotation.normalize();
   Eigen::Vector3d position(Eigen::Vector3d::Random());
@@ -39,7 +39,7 @@ TEST(KindrTfTest, transformKindrToMsgToKindr) {
   EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, 1e-6);
 }
 
-TEST(KindrTfTest, quaternionKindrToMsgToKindr) {
+TEST(KindrMsgTest, quaternionKindrToMsgToKindr) {
   Eigen::Quaterniond rotation(Eigen::Vector4d::Random());
   rotation.normalize();
 
@@ -51,7 +51,7 @@ TEST(KindrTfTest, quaternionKindrToMsgToKindr) {
   EXPECT_NEAR_EIGEN(output_rotation.coeffs(), rotation.coeffs(), 1e-6);
 }
 
-TEST(KindrTfTest, vectorKindrToMsgToKindr) {
+TEST(KindrMsgTest, vectorKindrToMsgToKindr) {
   Eigen::Vector3d position(Eigen::Vector3d::Random());
 
   geometry_msgs::Vector3 msg;
