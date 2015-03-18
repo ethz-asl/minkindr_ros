@@ -9,6 +9,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   <buildtool_depend>catkin_simple</buildtool_depend>
 
+  <depend>eigen_checks</depend>
   <depend>eigen_conversions</depend>
   <depend>geometry_msgs</depend>
   <depend>glog_catkin</depend>
