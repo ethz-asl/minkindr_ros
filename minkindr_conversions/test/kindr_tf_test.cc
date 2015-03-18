@@ -37,17 +37,14 @@ TEST(KindrTfTest, transformKindrToTFToKindr) {
   Eigen::Vector3d position(Eigen::Vector3d::Random());
   kindr::minimal::QuatTransformation kindr_transform(rotation, position);
 
-
   tf::Transform tf_transform;
   transformKindrToTF(kindr_transform, &tf_transform);
   kindr::minimal::QuatTransformation output_transform;
   transformTFToKindr(tf_transform, &output_transform);
 
-  EXPECT_NEAR_EIGEN(
-      output_transform.getRotation().toImplementation().coeffs(),
-      rotation.coeffs(), 1e-6);
-  EXPECT_NEAR_EIGEN(
-      output_transform.getPosition(), position, 1e-6);
+  EXPECT_NEAR_EIGEN(output_transform.getRotation().toImplementation().coeffs(),
+                    rotation.coeffs(), 1e-6);
+  EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, 1e-6);
 }
 
 TEST(KindrTfTest, quaternionKindrToTFToKindr) {

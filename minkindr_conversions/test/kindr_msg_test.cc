@@ -18,11 +18,9 @@ TEST(KindrTfTest, poseKindrToMsgToKindr) {
   kindr::minimal::QuatTransformation output_transform;
   poseMsgToKindr(msg, &output_transform);
 
-  EXPECT_NEAR_EIGEN(
-      output_transform.getRotation().toImplementation().coeffs(),
-      rotation.coeffs(), 1e-6);
-  EXPECT_NEAR_EIGEN(
-      output_transform.getPosition(), position, 1e-6);
+  EXPECT_NEAR_EIGEN(output_transform.getRotation().toImplementation().coeffs(),
+                    rotation.coeffs(), 1e-6);
+  EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, 1e-6);
 }
 
 TEST(KindrTfTest, transformKindrToMsgToKindr) {
@@ -36,11 +34,9 @@ TEST(KindrTfTest, transformKindrToMsgToKindr) {
   kindr::minimal::QuatTransformation output_transform;
   transformMsgToKindr(msg, &output_transform);
 
-  EXPECT_NEAR_EIGEN(
-      output_transform.getRotation().toImplementation().coeffs(),
-      rotation.coeffs(), 1e-6);
-  EXPECT_NEAR_EIGEN(
-      output_transform.getPosition(), position, 1e-6);
+  EXPECT_NEAR_EIGEN(output_transform.getRotation().toImplementation().coeffs(),
+                    rotation.coeffs(), 1e-6);
+  EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, 1e-6);
 }
 
 TEST(KindrTfTest, quaternionKindrToMsgToKindr) {
