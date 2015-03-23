@@ -35,6 +35,11 @@ void transformTFToKindr(const tf::Transform& tf_type,
   quaternionTFToKindr(tf_type.getRotation(), &rotation);
   vectorTFToKindr(tf_type.getOrigin(), &position);
 
+  // Enforce positive w.
+  if (rotation.w() < 0) {
+    rotation.coeffs() = -rotation.coeffs();
+  }
+
   *kindr = kindr::minimal::QuatTransformation(rotation, position);
 }
 

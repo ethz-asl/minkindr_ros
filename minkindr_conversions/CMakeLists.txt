@@ -15,6 +15,19 @@ cs_add_library(${PROJECT_NAME}
 )
 
 ##########
+# GTESTS #
+##########
+catkin_add_gtest(kindr_tf_test
+  test/kindr_tf_test.cc
+)
+target_link_libraries(kindr_tf_test ${PROJECT_NAME})
+
+catkin_add_gtest(kindr_msg_test
+  test/kindr_msg_test.cc
+)
+target_link_libraries(kindr_msg_test ${PROJECT_NAME})
+
+##########
 # EXPORT #
 ##########
 cs_install()
