@@ -7,6 +7,8 @@
 
 namespace tf {
 
+const double kTestTolerance = std::numeric_limits<double>::epsilon() * 3;
+
 TEST(KindrTfTest, transformPointKindrToTf) {
   // General test idea: evaluate how a point is transformed by each form of the
   // transformation.
@@ -26,9 +28,9 @@ TEST(KindrTfTest, transformPointKindrToTf) {
   tf::Vector3 tf_output = tf_transform * tf_point;
   Eigen::Vector3d kindr_output = kindr_transform * kindr_point;
 
-  EXPECT_NEAR(kindr_output.x(), tf_output.x(), 1e-6);
-  EXPECT_NEAR(kindr_output.y(), tf_output.y(), 1e-6);
-  EXPECT_NEAR(kindr_output.z(), tf_output.z(), 1e-6);
+  EXPECT_NEAR(kindr_output.x(), tf_output.x(), kTestTolerance);
+  EXPECT_NEAR(kindr_output.y(), tf_output.y(), kTestTolerance);
+  EXPECT_NEAR(kindr_output.z(), tf_output.z(), kTestTolerance);
 }
 
 TEST(KindrTfTest, transformKindrToTFToKindr) {
@@ -43,8 +45,8 @@ TEST(KindrTfTest, transformKindrToTFToKindr) {
   transformTFToKindr(tf_transform, &output_transform);
 
   EXPECT_NEAR_EIGEN(output_transform.getRotation().toImplementation().coeffs(),
-                    rotation.coeffs(), 1e-6);
-  EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, 1e-6);
+                    rotation.coeffs(), kTestTolerance);
+  EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, kTestTolerance);
 }
 
 TEST(KindrTfTest, quaternionKindrToTFToKindr) {
@@ -56,7 +58,7 @@ TEST(KindrTfTest, quaternionKindrToTFToKindr) {
   Eigen::Quaterniond output_rotation;
   quaternionTFToKindr(tf_quaternion, &output_rotation);
 
-  EXPECT_NEAR_EIGEN(output_rotation.coeffs(), rotation.coeffs(), 1e-6);
+  EXPECT_NEAR_EIGEN(output_rotation.coeffs(), rotation.coeffs(), kTestTolerance);
 }
 
 TEST(KindrTfTest, vectorKindrToTFToKindr) {
@@ -67,7 +69,7 @@ TEST(KindrTfTest, vectorKindrToTFToKindr) {
   Eigen::Vector3d output_position;
   vectorTFToKindr(tf_vector, &output_position);
 
-  EXPECT_NEAR_EIGEN(output_position, position, 1e-6);
+  EXPECT_NEAR_EIGEN(output_position, position, kTestTolerance);
 }
 
 }  // namespace tf

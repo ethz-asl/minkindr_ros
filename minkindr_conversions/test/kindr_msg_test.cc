@@ -7,6 +7,8 @@
 
 namespace tf {
 
+const double kTestTolerance = std::numeric_limits<double>::epsilon() * 3;
+
 TEST(KindrMsgTest, poseKindrToMsgToKindr) {
   Eigen::Quaterniond rotation(Eigen::Vector4d::Random());
   rotation.normalize();
@@ -19,8 +21,8 @@ TEST(KindrMsgTest, poseKindrToMsgToKindr) {
   poseMsgToKindr(msg, &output_transform);
 
   EXPECT_NEAR_EIGEN(output_transform.getRotation().toImplementation().coeffs(),
-                    rotation.coeffs(), 1e-6);
-  EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, 1e-6);
+                    rotation.coeffs(), kTestTolerance);
+  EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, kTestTolerance);
 }
 
 TEST(KindrMsgTest, transformKindrToMsgToKindr) {
@@ -35,8 +37,8 @@ TEST(KindrMsgTest, transformKindrToMsgToKindr) {
   transformMsgToKindr(msg, &output_transform);
 
   EXPECT_NEAR_EIGEN(output_transform.getRotation().toImplementation().coeffs(),
-                    rotation.coeffs(), 1e-6);
-  EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, 1e-6);
+                    rotation.coeffs(), kTestTolerance);
+  EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, kTestTolerance);
 }
 
 TEST(KindrMsgTest, quaternionKindrToMsgToKindr) {
@@ -48,7 +50,7 @@ TEST(KindrMsgTest, quaternionKindrToMsgToKindr) {
   Eigen::Quaterniond output_rotation;
   quaternionMsgToKindr(msg, &output_rotation);
 
-  EXPECT_NEAR_EIGEN(output_rotation.coeffs(), rotation.coeffs(), 1e-6);
+  EXPECT_NEAR_EIGEN(output_rotation.coeffs(), rotation.coeffs(), kTestTolerance);
 }
 
 TEST(KindrMsgTest, vectorKindrToMsgToKindr) {
@@ -59,7 +61,7 @@ TEST(KindrMsgTest, vectorKindrToMsgToKindr) {
   Eigen::Vector3d output_position;
   vectorMsgToKindr(msg, &output_position);
 
-  EXPECT_NEAR_EIGEN(output_position, position, 1e-6);
+  EXPECT_NEAR_EIGEN(output_position, position, kTestTolerance);
 }
 
 }  // namespace tf
