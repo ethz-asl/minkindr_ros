@@ -5,6 +5,7 @@
 #include <Eigen/Geometry>
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Pose.h>
+#include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/Quaternion.h>
 #include <geometry_msgs/Transform.h>
 #include <geometry_msgs/Vector3.h>
@@ -17,6 +18,14 @@ void poseKindrToMsg(const kindr::minimal::QuatTransformation& kindr,
                     geometry_msgs::Pose* msg);
 void poseMsgToKindr(const geometry_msgs::Pose& msg,
                     kindr::minimal::QuatTransformation* kindr);
+void poseKindrToMsg(const kindr::minimal::QuatTransformation& kindr,
+                    const ros::Time& time,
+                    const std::string& reference_frame,
+                    geometry_msgs::PoseStamped* msg);
+// Uses current time.
+void poseKindrToMsg(const kindr::minimal::QuatTransformation& kindr,
+                    const std::string& reference_frame,
+                    geometry_msgs::PoseStamped* msg);
 
 // Convert a kindr::minimal::QuatTransformation to a geometry_msgs::Transform.
 void transformKindrToMsg(const kindr::minimal::QuatTransformation& kindr,
