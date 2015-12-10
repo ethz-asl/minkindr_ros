@@ -24,7 +24,7 @@ void poseMsgToKindr(const geometry_msgs::Pose& msg,
   *kindr = kindr::minimal::QuatTransformation(rotation, position);
 }
 
-void poseKindrToMsg(const kindr::minimal::QuatTransformation& kindr,
+void poseStampedKindrToMsg(const kindr::minimal::QuatTransformation& kindr,
                     const ros::Time& time,
                     const std::string& reference_frame,
                     geometry_msgs::PoseStamped* msg) {
@@ -34,10 +34,10 @@ void poseKindrToMsg(const kindr::minimal::QuatTransformation& kindr,
   poseKindrToMsg(kindr, &msg->pose);
 }
 
-void poseKindrToMsg(const kindr::minimal::QuatTransformation& kindr,
+void poseStampedKindrToMsg(const kindr::minimal::QuatTransformation& kindr,
                     const std::string& reference_frame,
                     geometry_msgs::PoseStamped* msg) {
-  poseKindrToMsg(kindr, ros::Time(), reference_frame, msg);
+  poseStampedKindrToMsg(kindr, ros::Time(), reference_frame, msg);
 }
 
 void transformKindrToMsg(const kindr::minimal::QuatTransformation& kindr,
