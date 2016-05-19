@@ -12,6 +12,7 @@ add_definitions(-std=c++11)
 cs_add_library(${PROJECT_NAME}
   src/kindr_msg.cc
   src/kindr_tf.cc
+  src/kindr_xml.cc
 )
 
 ##########
