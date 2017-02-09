@@ -12,6 +12,7 @@
   <depend>eigen_conversions</depend>
   <depend>geometry_msgs</depend>
   <depend>glog_catkin</depend>
+  <depend>gflags_catkin</depend>
   <depend>minkindr</depend>
   <depend>tf</depend>
   <depend>tf_conversions</depend>
