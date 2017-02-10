@@ -16,50 +16,6 @@
 
 namespace tf {
 
-// Convert a kindr::minimal::QuatTransformation to a 6 DoF geometry msgs pose.
-template <typename Scalar>
-void poseKindrToMsg(
-    const kindr::minimal::QuatTransformationTemplate<Scalar>& kindr,
-    geometry_msgs::Pose* msg) {
-  CHECK_NOTNULL(msg);
-  pointKindrToMsg(kindr.getPosition(), &msg->position);
-  quaternionKindrToMsg(kindr.getRotation(), &msg->orientation);
-}
-
-template <typename Scalar>
-void poseMsgToKindr(const geometry_msgs::Pose& msg,
-                    kindr::minimal::QuatTransformationTemplate<Scalar>* kindr) {
-  CHECK_NOTNULL(kindr);
-  Eigen::Matrix<Scalar, 3, 1> position;
-  Eigen::Quaternion<Scalar> rotation;
-
-  quaternionMsgToKindr(msg.orientation, &rotation);
-  pointMsgToKindr(msg.position, &position);
-
-  *kindr =
-      kindr::minimal::QuatTransformationTemplate<Scalar>(rotation, position);
-}
-
-template <typename Scalar>
-void poseStampedKindrToMsg(
-    const kindr::minimal::QuatTransformationTemplate<Scalar>& kindr,
-    const ros::Time& time, const std::string& reference_frame,
-    geometry_msgs::PoseStamped* msg) {
-  CHECK_NOTNULL(msg);
-  msg->header.frame_id = reference_frame;
-  msg->header.stamp = time;
-  poseKindrToMsg(kindr, &msg->pose);
-}
-
-// Uses current time.
-template <typename Scalar>
-void poseStampedKindrToMsg(
-    const kindr::minimal::QuatTransformationTemplate<Scalar>& kindr,
-    const std::string& reference_frame, geometry_msgs::PoseStamped* msg) {
-  poseStampedKindrToMsg(kindr, ros::Time(), reference_frame, msg);
-}
-
-
 // A wrapper for the relevant functions in eigen_conversions.
 template <typename Scalar>
 void quaternionKindrToMsg(
@@ -125,6 +81,49 @@ void vectorMsgToKindr(const geometry_msgs::Vector3& msg,
   Eigen::Matrix<double, 3, 1> kindr_double;
   vectorMsgToEigen(msg, kindr_double);
   *kindr = kindr_double.cast<Scalar>();
+}
+
+// Convert a kindr::minimal::QuatTransformation to a 6 DoF geometry msgs pose.
+template <typename Scalar>
+void poseKindrToMsg(
+    const kindr::minimal::QuatTransformationTemplate<Scalar>& kindr,
+    geometry_msgs::Pose* msg) {
+  CHECK_NOTNULL(msg);
+  pointKindrToMsg(kindr.getPosition(), &msg->position);
+  quaternionKindrToMsg(kindr.getRotation(), &msg->orientation);
+}
+
+template <typename Scalar>
+void poseMsgToKindr(const geometry_msgs::Pose& msg,
+                    kindr::minimal::QuatTransformationTemplate<Scalar>* kindr) {
+  CHECK_NOTNULL(kindr);
+  Eigen::Matrix<Scalar, 3, 1> position;
+  Eigen::Quaternion<Scalar> rotation;
+
+  quaternionMsgToKindr(msg.orientation, &rotation);
+  pointMsgToKindr(msg.position, &position);
+
+  *kindr =
+      kindr::minimal::QuatTransformationTemplate<Scalar>(rotation, position);
+}
+
+template <typename Scalar>
+void poseStampedKindrToMsg(
+    const kindr::minimal::QuatTransformationTemplate<Scalar>& kindr,
+    const ros::Time& time, const std::string& reference_frame,
+    geometry_msgs::PoseStamped* msg) {
+  CHECK_NOTNULL(msg);
+  msg->header.frame_id = reference_frame;
+  msg->header.stamp = time;
+  poseKindrToMsg(kindr, &msg->pose);
+}
+
+// Uses current time.
+template <typename Scalar>
+void poseStampedKindrToMsg(
+    const kindr::minimal::QuatTransformationTemplate<Scalar>& kindr,
+    const std::string& reference_frame, geometry_msgs::PoseStamped* msg) {
+  poseStampedKindrToMsg(kindr, ros::Time(), reference_frame, msg);
 }
 
 // Convert a kindr::minimal::QuatTransformation to a geometry_msgs::Transform.
