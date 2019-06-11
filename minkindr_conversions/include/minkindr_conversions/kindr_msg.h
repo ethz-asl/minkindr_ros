@@ -59,7 +59,9 @@ void rotationKindr2DToMsg(
     const Eigen::Rotation2D<Scalar>& kindr, geometry_msgs::Quaternion* msg) {
   CHECK_NOTNULL(msg);
   const kindr::minimal::RotationQuaternionTemplate<Scalar> quat(
-      kindr::minimal::AngleAxisTemplate<Scalar>(kindr.angle(), 0.0, 0.0, 1.0));
+      kindr::minimal::AngleAxisTemplate<Scalar>(
+          kindr.angle(), static_cast<Scalar>(0.0), static_cast<Scalar>(0.0),
+          static_cast<Scalar>(1.0)));
   quaternionEigenToMsg(quat.toImplementation(), *msg);
 }
 
@@ -67,9 +69,9 @@ template <typename Scalar>
 void quaternionMsgToKindr2D(
     const geometry_msgs::Quaternion& msg, Eigen::Rotation2D<Scalar>* kindr) {
   CHECK_NOTNULL(kindr);
-  CHECK_LT(std::abs(msg.x), std::numeric_limits<Scalar>::epsilon())
+  CHECK_LT(std::abs(msg.x), std::numeric_limits<double>::epsilon())
       << "No proper 2D rotation.";
-  CHECK_LT(std::abs(msg.y), std::numeric_limits<Scalar>::epsilon())
+  CHECK_LT(std::abs(msg.y), std::numeric_limits<double>::epsilon())
       << "No proper 2D rotation.";
   kindr::minimal::RotationQuaternionTemplate<Scalar> quat;
   quaternionMsgToEigen(msg, quat.toImplementation());
@@ -96,8 +98,8 @@ template <typename Scalar>
 void pointKindr2DToMsg(
     const Eigen::Matrix<Scalar, 2, 1>& kindr, geometry_msgs::Point* msg) {
   CHECK_NOTNULL(msg);
-  msg->x = kindr.x();
-  msg->y = kindr.y();
+  msg->x = static_cast<double>(kindr.x());
+  msg->y = static_cast<double>(kindr.y());
   msg->z = 0.0;
 }
 
@@ -108,8 +110,8 @@ void pointMsgToKindr2D(
   // Verify that we got a proper 2D pose.
   CHECK_LT(std::abs(msg.z), std::numeric_limits<Scalar>::epsilon())
       << "No proper 2D position.";
-  kindr->x() = msg.x;
-  kindr->y() = msg.y;
+  kindr->x() = static_cast<Scalar>(msg.x);
+  kindr->y() = static_cast<Scalar>(msg.y);
 }
 
 template <typename Scalar>
@@ -205,7 +207,6 @@ void poseKindr2DToMsg(
   pointKindr2DToMsg(kindr.getPosition(), &msg->position);
   rotationKindr2DToMsg(kindr.getRotation(), &msg->orientation);
 }
-
 
 // The input is assumed to be pseudo-2D: The z component of the position and
 // the x/y components of the quaternion must be '0.0', otherwise this
