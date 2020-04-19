@@ -30,19 +30,22 @@ TEST(KindrMsgTest, poseKindrToMsgToKindr) {
 }
 
 TEST(KindrMsgTest, poseKindr2DToMsgToKindr2D) {
-  static constexpr double kTestRotationAngleRad = 0.5;
-  Eigen::Rotation2D<double> rotation(kTestRotationAngleRad);
-  const Eigen::Vector2d position = Eigen::Vector2d::Random();
-  kindr::minimal::Transformation2D kindr_transform(rotation, position);
+  std::vector<double> test_rotation_angles_rad {-0.5, 0.5};
+  for( auto const angle_rad : test_rotation_angles_rad) {
+    Eigen::Rotation2D<double> rotation(angle_rad);
+    const Eigen::Vector2d position = Eigen::Vector2d::Random();
+    kindr::minimal::Transformation2D kindr_transform(rotation, position);
 
-  geometry_msgs::Pose msg;
-  poseKindr2DToMsg(kindr_transform, &msg);
-  kindr::minimal::Transformation2D output_transform;
-  poseMsgToKindr2D(msg, &output_transform);
+    geometry_msgs::Pose msg;
+    poseKindr2DToMsg(kindr_transform, &msg);
+    kindr::minimal::Transformation2D output_transform;
+    poseMsgToKindr2D(msg, &output_transform);
 
-  EXPECT_NEAR(
-      output_transform.getRotation().angle(), rotation.angle(), kTestTolerance);
-  EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, kTestTolerance);
+    EXPECT_NEAR(
+        output_transform.getRotation().angle(), rotation.angle(), kTestTolerance)
+            << "Angle: " << angle_rad;
+    EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, kTestTolerance);
+  }
 }
 
 TEST(KindrMsgTest, poseMsgToKindr2DFailsForInvalidInputPose) {
