@@ -30,8 +30,7 @@ TEST(KindrMsgTest, poseKindrToMsgToKindr) {
 }
 
 TEST(KindrMsgTest, poseKindr2DToMsgToKindr2D) {
-  std::vector<double> test_rotation_angles_rad {-0.5, 0.5};
-  for( auto const angle_rad : test_rotation_angles_rad) {
+  for(auto const angle_rad : {-0.5, 0.5}) {
     Eigen::Rotation2D<double> rotation(angle_rad);
     const Eigen::Vector2d position = Eigen::Vector2d::Random();
     kindr::minimal::Transformation2D kindr_transform(rotation, position);
@@ -42,7 +41,7 @@ TEST(KindrMsgTest, poseKindr2DToMsgToKindr2D) {
     poseMsgToKindr2D(msg, &output_transform);
 
     EXPECT_NEAR(
-        output_transform.getRotation().angle(), rotation.angle(), kTestTolerance)
+        output_transform.getRotation().angle(), angle_rad, kTestTolerance)
             << "Angle: " << angle_rad;
     EXPECT_NEAR_EIGEN(output_transform.getPosition(), position, kTestTolerance);
   }
