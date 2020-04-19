@@ -76,8 +76,7 @@ void quaternionMsgToKindr2D(
   kindr::minimal::RotationQuaternionTemplate<Scalar> quat;
   quaternionMsgToEigen(msg, quat.toImplementation());
   const kindr::minimal::AngleAxisTemplate<Scalar> angle_axis(quat);
-  const Scalar sign = angle_axis.axis()(2) >= Scalar(0) ? Scalar(1) : Scalar(-1);
-  kindr->angle() = angle_axis.angle() * sign;
+  kindr->angle() = std::copysign(angle_axis.angle(), angle_axis.axis()(2));
 }
 
 // A wrapper for the relevant functions in eigen_conversions.
